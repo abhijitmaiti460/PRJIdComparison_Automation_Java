@@ -5,8 +5,10 @@ import java.util.Set;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -15,7 +17,6 @@ public class CreatePRJIdComparsionSheet {
 
 	public static void createSummarySheet(Workbook workbook, Sheet originalSheet, Set<String> allPRJId,
 			Set<String> allPeriods) {
-
 		String sheetName = "PRJId Comparison";
 
 		Sheet existingSheet = workbook.getSheet(sheetName);
@@ -30,6 +31,8 @@ public class CreatePRJIdComparsionSheet {
 
 		CellStyle headerStyle = workbook.createCellStyle();
 		headerStyle.setFont(headerFont);
+		headerStyle.setFillForegroundColor(IndexedColors.PALE_BLUE.getIndex());
+		headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
 		Font normalFont = workbook.createFont();
 		normalFont.setFontHeightInPoints((short) 9);
@@ -57,22 +60,26 @@ public class CreatePRJIdComparsionSheet {
 
 		int rowIndex = 1;
 
-		for (String prjid : allPRJId) {
+		 for (String prjId : allPRJId) {
 
-			Row row = summarySheet.createRow(rowIndex++);
-			row.createCell(0).setCellValue(prjid);
+	            Row row = summarySheet.createRow(rowIndex++);
+	            row.createCell(0).setCellValue(prjId);
 
-			colIndex = 1;
+	            colIndex = 1;
+	            int periodIndex = 0;
 
-			for (String period : allPeriods) {
+	            for (String period : allPeriods) {
 
-				double total = CalculateDemandByPRJId.calculateDemand(originalSheet, prjid, period);
+	                double total =
+	                        CalculateDemandByPRJId.calculateDemand(originalSheet, prjId, period);
 
-				Cell cell = row.createCell(colIndex++);
-				cell.setCellValue(total);
-				cell.setCellStyle(normalStyle);
-			}
-		}
+	                periodTotals[periodIndex++] += total;
+
+	                Cell cell = row.createCell(colIndex++);
+	                cell.setCellValue(total);
+	                cell.setCellStyle(normalStyle);
+	            }
+	        }
 		
 		 Row totalRow = summarySheet.createRow(rowIndex);
 
