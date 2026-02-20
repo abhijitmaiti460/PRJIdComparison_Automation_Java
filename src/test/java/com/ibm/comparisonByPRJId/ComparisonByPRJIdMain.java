@@ -11,12 +11,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ComparisonByPRJIdMain {
 
 	public static final String FILE_PATH = "./src/test/resources/Demand forecast -12Feb26.xlsx";
-	
+	public static final String FILE_PATH2 = "./src/test/resources/Demand forecast -12Feb2.xlsx";
 	public static void main(String [] args) {
 		getWrokbook();
 	}
 	public static void getWrokbook() {
 		try {
+			CalculateRfs calculaterfs=new  CalculateRfs(FILE_PATH,FILE_PATH2);
 			Workbook workbook = loadWorkbook(FILE_PATH);
 			Sheet sheet = workbook.getSheet("Demand-12Feb");	
 			Set<String> allPRJId = PRJIdExtractionFromDemands.extractAllPRJId(sheet);

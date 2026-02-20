@@ -49,6 +49,7 @@ public class CreatePRJIdComparsionSheet {
 		int colIndex = 1;
 		for (String period : allPeriods) {
 			Cell cell = header.createCell(colIndex++);
+			
 			cell.setCellValue(period);
 			cell.setCellStyle(headerStyle);
 		}
