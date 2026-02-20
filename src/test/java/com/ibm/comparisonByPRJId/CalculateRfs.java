@@ -82,7 +82,6 @@ public class CalculateRfs {
                 }
             }
 
-           // makesheet(projctid,count,r,total);
             if (firstRowForThisProject) {
               	row = outSh.createRow(outRow++);
                 row.createCell(0).setCellValue(projctid);
@@ -97,16 +96,3 @@ public class CalculateRfs {
     }
 }
     
-//    public static void makesheet(String pid,int coun,double period,double period_total) {
-//    boolean firstr=true;
-//    	if (firstr) {
-//           	row = outSh.createRow(outRow++);
-//             row.createCell(0).setCellValue(pid);
-//             firstr = false;
-//         }
-//
-//         header.createCell(coun).setCellValue(period);
-//         row.createCell(coun).setCellValue(period_total);
-//
-//    	
-//    }
