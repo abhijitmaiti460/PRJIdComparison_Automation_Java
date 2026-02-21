@@ -7,30 +7,30 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 public class CalculateDemandByPRJId {
 	public static double calculateDemand(Sheet sheet, String targetPRJId, String targetPeriod) {
-		double total = 0;
+		double totalDemand = 0;
 		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 			Row row = sheet.getRow(i);
 
 			if (row != null && isMatchingRow(row, targetPRJId, targetPeriod)) {
-				total += row.getCell(5).getNumericCellValue();
+				totalDemand += row.getCell(5).getNumericCellValue();
 			}
 		}
-		System.out.println("Total Demand for " + targetPRJId + " in " + targetPeriod + " = " + total);
-		return Math.round(total * 100.0) / 100.0;
+		 System.out.println("Total Demand for " + targetPRJId + " in " + targetPeriod + " = " + totalDemand);
+		return Math.round(totalDemand * 100.0) / 100.0;
 	}
-
 	public static boolean isMatchingRow(Row row, String targetPRJId, String targetPeriod) {
-		Cell prjidCell = row.getCell(2);
+		Cell PRJIdCell = row.getCell(2);
 		Cell demandCell = row.getCell(5);
 		Cell periodCell = row.getCell(6);
-		if (prjidCell == null || periodCell == null || demandCell == null)
+		if (PRJIdCell == null || periodCell == null || demandCell == null)
 			return false;
-		if (prjidCell.getCellType() == CellType.STRING && periodCell.getCellType() == CellType.STRING
+		if (PRJIdCell.getCellType() == CellType.STRING && periodCell.getCellType() == CellType.STRING
 				&& demandCell.getCellType() == CellType.NUMERIC) {
-			return targetPRJId.equalsIgnoreCase(prjidCell.getStringCellValue())
+			return targetPRJId.equalsIgnoreCase(PRJIdCell.getStringCellValue())
 					&& targetPeriod.equalsIgnoreCase(periodCell.getStringCellValue());
 		}
 		return false;
 	}
+
 
 }

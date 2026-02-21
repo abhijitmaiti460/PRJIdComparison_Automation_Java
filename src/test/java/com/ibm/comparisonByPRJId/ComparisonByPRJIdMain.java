@@ -11,17 +11,21 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ComparisonByPRJIdMain {
 
 	public static final String FILE_PATH = "./src/test/resources/Demand forecast -12Feb26.xlsx";
-	
+	public static final String FILE_PATH2 = "./src/test/resources/Demand forecast -12Feb2.xlsx";
 	public static void main(String [] args) {
 		getWrokbook();
 	}
 	public static void getWrokbook() {
 		try {
 			Workbook workbook = loadWorkbook(FILE_PATH);
-			Sheet sheet = workbook.getSheet("Demand-12Feb");	
-			Set<String> allPRJId = PRJIdExtractionFromDemands.extractAllPRJId(sheet);
-			Set<String> allPeriod = PeriodExtractionFromDemands.periodExtractionFromDemand(sheet);
-			CreatePRJIdComparsionSheet.createSummarySheet( workbook, sheet ,allPRJId,allPeriod);
+			Sheet sheet1 = workbook.getSheet("Demand-12Feb");
+			Sheet sheet2 = workbook.getSheet("QAgile Extract-12Feb");
+			Set<String> allPRJId = PRJIdExtractionFromDemands.extractAllPRJId(sheet1);
+			Set<String> allPeriod = PeriodExtractionFromDemands.periodExtractionFromDemand(sheet1);
+			
+			Set<String> allRFSPeriod = RFSPeriodExtractionFromQagile.periodExtractionFromQagile(sheet2);
+			
+			CreatePRJIdComparsionSheet.createSummarySheet( workbook, sheet1,sheet2 ,allPRJId,allPeriod,allRFSPeriod);
 			SavePRJIdComparsionSheet.saveWorkbook(workbook, FILE_PATH);
 			System.out.println("Summary sheet created successfully.");
 			

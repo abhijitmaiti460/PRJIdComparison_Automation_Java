@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.*;
 
 public class PeriodExtractionFromDemands {
 	public static Set<String> periodExtractionFromDemand(Sheet sheet) {
-		Set<String>setOfPeriod = new TreeSet<>();
+		Set<String> setOfPeriod = new TreeSet<>();
 		for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 			Row row = sheet.getRow(i);
 			if (row == null) {
@@ -29,5 +29,7 @@ public class PeriodExtractionFromDemands {
 		}
 		return setOfPeriod;
 	}
+
+	
 
 }
